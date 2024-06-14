@@ -1,0 +1,40 @@
+{
+  "name": "mh-ts",
+  "type": "module",
+  "main": "src/index.ts",
+  "private": true,
+  "version": "1.0.0",
+  "description": "MS-TS (Stéfano Acosta)",
+  "scripts": {
+    "start": "DIRNAME=$(pwd) PORT=${PORT:=3000} node --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts",
+    "test": "npm run lint && npm run typecheck && npm run test:unit && npm run test:integration",
+    "test:unit": "DIRNAME=$(pwd) NODE_OPTIONS='--loader=ts-node/esm --no-warnings --experimental-specifier-resolution=node' ava --config=ava.config.cjs",
+    "test:integration": "start-server-and-test \"start\" \"http-get://0.0.0.0:3000/healthCheck\" \"test:integration:run\"",
+    "test:integration:run": "DIRNAME=$(pwd) NODE_OPTIONS='--loader=ts-node/esm --no-warnings --experimental-specifier-resolution=node' ava --config=ava.integration.config.cjs",
+    "lint": "eslint '**/*' --ext .ts",
+    "lint:fix": "npm run lint -- --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "Stéfano Acosta",
+  "license": "MIT",
+  "engines": {
+    "node": "^20"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@stefanoa1/eslint-plugin-sab": "^2.2.15",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.12.4",
+    "@typescript-eslint/eslint-plugin": "^7.5.0",
+    "@typescript-eslint/parser": "^7.5.0",
+    "ava": "^5.2.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.5",
+    "start-server-and-test": "^2.0.3",
+    "typescript": "^5.4.3"
+  }
+}
